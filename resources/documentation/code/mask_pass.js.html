@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: src/lib/mask_pass.js</title>
+    
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+    
+    <h1 class="page-title">Source: src/lib/mask_pass.js</h1>
+    
+    
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source"><code>/**
+ * @author alteredq / http://alteredqualia.com/
+ */
+
+THREE.MaskPass = function (scene, camera) {
+
+	this.scene = scene;
+	this.camera = camera;
+
+	this.enabled = true;
+	this.clear = true;
+	this.needsSwap = false;
+
+	this.inverse = false;
+
+};
+
+THREE.MaskPass.prototype = {
+
+	render: function (renderer, writeBuffer, readBuffer, delta) {
+
+		var context = renderer.context;
+
+		// don't update color or depth
+
+		context.colorMask(false, false, false, false);
+		context.depthMask(false);
+
+		// set up stencil
+
+		var writeValue, clearValue;
+
+		if (this.inverse) {
+
+			writeValue = 0;
+			clearValue = 1;
+
+		} else {
+
+			writeValue = 1;
+			clearValue = 0;
+
+		}
+
+		context.enable(context.STENCIL_TEST);
+		context.stencilOp(context.REPLACE, context.REPLACE, context.REPLACE);
+		context.stencilFunc(context.ALWAYS, writeValue, 0xffffffff);
+		context.clearStencil(clearValue);
+
+		// draw into the stencil buffer
+
+		renderer.render(this.scene, this.camera, readBuffer, this.clear);
+		renderer.render(this.scene, this.camera, writeBuffer, this.clear);
+
+		// re-enable update of color and depth
+
+		context.colorMask(true, true, true, true);
+		context.depthMask(true);
+
+		// only render where stencil is set to 1
+
+		context.stencilFunc(context.EQUAL, 1, 0xffffffff);  // draw if == 1
+		context.stencilOp(context.KEEP, context.KEEP, context.KEEP);
+
+	}
+
+};
+
+
+THREE.ClearMaskPass = function () {
+
+	this.enabled = true;
+
+};
+
+THREE.ClearMaskPass.prototype = {
+
+	render: function (renderer, writeBuffer, readBuffer, delta) {
+
+		var context = renderer.context;
+
+		context.disable(context.STENCIL_TEST);
+
+	}
+
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="Hotspot.html">Hotspot</a></li><li><a href="Location.html">Location</a></li><li><a href="LocationLoader.html">LocationLoader</a></li><li><a href="THREE.RenderPass.html">RenderPass</a></li><li><a href="THREE.ShaderPass.html">ShaderPass</a></li><li><a href="Transition.html">Transition</a></li></ul><h3>Namespaces</h3><ul><li><a href="THREEx.html">THREEx</a></li></ul><h3>Global</h3><ul><li><a href="global.html#_">_</a></li><li><a href="global.html#animate">animate</a></li><li><a href="global.html#camera">camera</a></li><li><a href="global.html#Detector">Detector</a></li><li><a href="global.html#downEventHandler">downEventHandler</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#initEventListener">initEventListener</a></li><li><a href="global.html#initTooltip">initTooltip</a></li><li><a href="global.html#moveEventHandler">moveEventHandler</a></li><li><a href="global.html#onDocumentTouchEnd">onDocumentTouchEnd</a></li><li><a href="global.html#onDocumentTouchMove">onDocumentTouchMove</a></li><li><a href="global.html#onDocumentTouchStart">onDocumentTouchStart</a></li><li><a href="global.html#onKeyDown">onKeyDown</a></li><li><a href="global.html#onKeyUp">onKeyUp</a></li><li><a href="global.html#onMouseDown">onMouseDown</a></li><li><a href="global.html#onMouseMove">onMouseMove</a></li><li><a href="global.html#onMouseUp">onMouseUp</a></li><li><a href="global.html#onMouseWheel">onMouseWheel</a></li><li><a href="global.html#onWindowResize">onWindowResize</a></li><li><a href="global.html#parseConfigJSON">parseConfigJSON</a></li><li><a href="global.html#resetPanorama">resetPanorama</a></li><li><a href="global.html#setMapandNavigationHidden">setMapandNavigationHidden</a></li><li><a href="global.html#setupBrightBlurShader">setupBrightBlurShader</a></li><li><a href="global.html#setupDarkBlurShader">setupDarkBlurShader</a></li><li><a href="global.html#showAbout">showAbout</a></li><li><a href="global.html#startComplete">startComplete</a></li><li><a href="global.html#startPanorama">startPanorama</a></li><li><a href="global.html#switchScene">switchScene</a></li><li><a href="global.html#THREE">THREE</a></li><li><a href="global.html#transitToLocation">transitToLocation</a></li><li><a href="global.html#update">update</a></li><li><a href="global.html#updateCursor">updateCursor</a></li><li><a href="global.html#updateSceneSwitchButton">updateSceneSwitchButton</a></li><li><a href="global.html#updateTargetList">updateTargetList</a></li><li><a href="global.html#upEventHandler">upEventHandler</a></li><li><a href="global.html#vectorToString">vectorToString</a></li><li><a href="global.html#wheelEventHandler">wheelEventHandler</a></li><li><a href="global.html#zoom">zoom</a></li></ul>
+</nav>
+
+<br clear="both">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Tue Jul 07 2015 00:50:17 GMT+0200 (CEST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

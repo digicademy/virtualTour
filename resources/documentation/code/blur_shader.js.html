@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: src/lib/blur_shader.js</title>
+    
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+    
+    <h1 class="page-title">Source: src/lib/blur_shader.js</h1>
+    
+    
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source"><code>/**
+ * inspired by zz85 / http://www.lab4games.net/zz85/blog
+ *
+ * Gaussian blur filter (horizontal and vertical blur shaders)
+ * - described in http://www.gamerendering.com/2008/10/11/gaussian-blur-filter-shader/
+ * and used in http://www.cake23.de/traveling-wavefronts-lit-up.html
+ *
+ * - 18 samples per pass
+ * - standard deviation 2.7
+ * - "h" and "v" parameters should be set to "1 / width" and "1 / height"
+ */
+THREE.BlurShader = {
+	uniforms: {
+		"tDiffuse": {type: "t", value: null},
+		"h": {type: "f", value: 1.0 / 512.0},
+		"v": {type: "f", value: 1.0 / 512.0},
+		"strength": {type: "f", value: 0.5}
+	},
+	vertexShader: [
+		"varying vec2 vUv;",
+		"void main() {",
+		"vUv = uv;",
+		"gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );",
+		"}"
+	].join("\n"),
+	fragmentShader: [
+		"uniform sampler2D tDiffuse;",
+		"uniform float h;",
+		"uniform float v;",
+		"uniform float strength;",
+		"varying vec2 vUv;",
+		"void main() {",
+		"vec4 sum = vec4( 0.0 );",
+
+		"//horizontal",
+		"sum += texture2D( tDiffuse, vec2( vUv.x - 4.0 * h, vUv.y ) ) * 0.051;",
+		"sum += texture2D( tDiffuse, vec2( vUv.x - 3.0 * h, vUv.y ) ) * 0.0918;",
+		"sum += texture2D( tDiffuse, vec2( vUv.x - 2.0 * h, vUv.y ) ) * 0.12245;",
+		"sum += texture2D( tDiffuse, vec2( vUv.x - 1.0 * h, vUv.y ) ) * 0.1531;",
+		"sum += texture2D( tDiffuse, vec2( vUv.x, vUv.y ) ) * 0.1633;",
+		"sum += texture2D( tDiffuse, vec2( vUv.x + 1.0 * h, vUv.y ) ) * 0.1531;",
+		"sum += texture2D( tDiffuse, vec2( vUv.x + 2.0 * h, vUv.y ) ) * 0.12245;",
+		"sum += texture2D( tDiffuse, vec2( vUv.x + 3.0 * h, vUv.y ) ) * 0.0918;",
+		"sum += texture2D( tDiffuse, vec2( vUv.x + 4.0 * h, vUv.y ) ) * 0.051;",
+
+		"//vertical",
+		"sum += texture2D( tDiffuse, vec2( vUv.x, vUv.y - 4.0 * v ) ) * 0.051;",
+		"sum += texture2D( tDiffuse, vec2( vUv.x, vUv.y - 3.0 * v ) ) * 0.0918;",
+		"sum += texture2D( tDiffuse, vec2( vUv.x, vUv.y - 2.0 * v ) ) * 0.12245;",
+		"sum += texture2D( tDiffuse, vec2( vUv.x, vUv.y - 1.0 * v ) ) * 0.1531;",
+		"sum += texture2D( tDiffuse, vec2( vUv.x, vUv.y ) ) * 0.1633;",
+		"sum += texture2D( tDiffuse, vec2( vUv.x, vUv.y + 1.0 * v ) ) * 0.1531;",
+		"sum += texture2D( tDiffuse, vec2( vUv.x, vUv.y + 2.0 * v ) ) * 0.12245;",
+		"sum += texture2D( tDiffuse, vec2( vUv.x, vUv.y + 3.0 * v ) ) * 0.0918;",
+		"sum += texture2D( tDiffuse, vec2( vUv.x, vUv.y + 4.0 * v ) ) * 0.051;",
+
+		"sum *= strength;",
+		"gl_FragColor = sum;",
+		"}"
+	].join("\n")
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="Hotspot.html">Hotspot</a></li><li><a href="Location.html">Location</a></li><li><a href="LocationLoader.html">LocationLoader</a></li><li><a href="THREE.RenderPass.html">RenderPass</a></li><li><a href="THREE.ShaderPass.html">ShaderPass</a></li><li><a href="Transition.html">Transition</a></li></ul><h3>Namespaces</h3><ul><li><a href="THREEx.html">THREEx</a></li></ul><h3>Global</h3><ul><li><a href="global.html#_">_</a></li><li><a href="global.html#animate">animate</a></li><li><a href="global.html#camera">camera</a></li><li><a href="global.html#Detector">Detector</a></li><li><a href="global.html#downEventHandler">downEventHandler</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#initEventListener">initEventListener</a></li><li><a href="global.html#initTooltip">initTooltip</a></li><li><a href="global.html#moveEventHandler">moveEventHandler</a></li><li><a href="global.html#onDocumentTouchEnd">onDocumentTouchEnd</a></li><li><a href="global.html#onDocumentTouchMove">onDocumentTouchMove</a></li><li><a href="global.html#onDocumentTouchStart">onDocumentTouchStart</a></li><li><a href="global.html#onKeyDown">onKeyDown</a></li><li><a href="global.html#onKeyUp">onKeyUp</a></li><li><a href="global.html#onMouseDown">onMouseDown</a></li><li><a href="global.html#onMouseMove">onMouseMove</a></li><li><a href="global.html#onMouseUp">onMouseUp</a></li><li><a href="global.html#onMouseWheel">onMouseWheel</a></li><li><a href="global.html#onWindowResize">onWindowResize</a></li><li><a href="global.html#parseConfigJSON">parseConfigJSON</a></li><li><a href="global.html#resetPanorama">resetPanorama</a></li><li><a href="global.html#setMapandNavigationHidden">setMapandNavigationHidden</a></li><li><a href="global.html#setupBrightBlurShader">setupBrightBlurShader</a></li><li><a href="global.html#setupDarkBlurShader">setupDarkBlurShader</a></li><li><a href="global.html#showAbout">showAbout</a></li><li><a href="global.html#startComplete">startComplete</a></li><li><a href="global.html#startPanorama">startPanorama</a></li><li><a href="global.html#switchScene">switchScene</a></li><li><a href="global.html#THREE">THREE</a></li><li><a href="global.html#transitToLocation">transitToLocation</a></li><li><a href="global.html#update">update</a></li><li><a href="global.html#updateCursor">updateCursor</a></li><li><a href="global.html#updateSceneSwitchButton">updateSceneSwitchButton</a></li><li><a href="global.html#updateTargetList">updateTargetList</a></li><li><a href="global.html#upEventHandler">upEventHandler</a></li><li><a href="global.html#vectorToString">vectorToString</a></li><li><a href="global.html#wheelEventHandler">wheelEventHandler</a></li><li><a href="global.html#zoom">zoom</a></li></ul>
+</nav>
+
+<br clear="both">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Tue Jul 07 2015 00:50:17 GMT+0200 (CEST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

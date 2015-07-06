@@ -1,0 +1,110 @@
+{
+	"startLocation": 2,
+	"maps": [
+		{
+			"uid": 1,
+			"image": "resources/maps/sampleMap.png",
+			"mapSpots": [
+				{
+					"uid": 1,
+					"tooltip": "Map Spot 1",
+					"mapPosX": 100,
+					"mapPosY": 65
+				},
+				{
+					"uid": 2,
+					"tooltip": "Map Spot 2",
+					"mapPosX": 30,
+					"mapPosY": 65
+				}
+			]
+		}
+	],
+	"locations": [
+		{
+			"uid": 1,
+			"image": {
+				"default": "resources/panos/default/sample1.jpg",
+				"hq": "resources/panos/hq/sample1.jpg",
+				"mobile": "resources/panos/mobile/sample1.jpg"
+			},
+			"mapUid": 1,
+			"transitions": [
+				{
+					"target_location": 2,
+					"tooltip": "Location 2",
+					"posX": 79,
+					"posY": -34,
+					"posZ": -175
+				}
+			],
+			"cameraTargets": {
+				"2": {
+					"lat": 16,
+					"lon": 111
+				},
+				"-1": {
+					"lat": -10,
+					"lon": -65
+				}
+			},
+		  "hotspots": [
+			{
+				"uid": 1,
+				"title": "Title",
+				"tooltip": "Information",
+			 	"text": "Example with audio.",
+				"audio": "resources/audio/audiosample",
+				"posX": -61,
+				"posY": 114,
+				"posZ": 145
+			}
+		  ]
+		},
+		{
+			"uid": 2,
+			"image": {
+				"default": "resources/panos/default/sample2.jpg",
+				"hq": "resources/panos/hq/sample2.jpg",
+				"mobile": "resources/panos/mobile/sample2.jpg"
+			},
+			"mapUid": 1,
+			"transitions": [
+				{
+					"target_location": 1,
+					"tooltip": "Location 1",
+					"posX": -52,
+					"posY": -28,
+					"posZ": -186
+				}
+			],
+	 		"cameraTargets": {
+				"1": {
+					"lat": -2,
+					"lon": 78
+				},
+				"-1": {
+			 		"lat": 14,
+					"lon": 252
+				}
+			},
+			"hotspots": [
+				{
+					"uid": 1,
+					"title": "Title",
+					"tooltip": "Information",
+					"text": "Example with image. Some text information here. <a href=\"http://www.digitale-akademie.de/\"  target=\"_blank\">Sample Link, opens in a new window.</a>",
+					"images": [
+						{
+							"figure": "resources/images/imagesample.png",
+							"caption": "Image credits or description. © Brunhilde Escherich"
+						}
+					],
+					"posX": -38,
+					"posY": 107,
+			 		"posZ": -157
+					}
+	 		]
+		}
+	]
+}

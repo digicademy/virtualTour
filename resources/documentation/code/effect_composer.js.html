@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: src/lib/effect_composer.js</title>
+    
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+    
+    <h1 class="page-title">Source: src/lib/effect_composer.js</h1>
+    
+    
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source"><code>/**
+ * @author alteredq / http://alteredqualia.com/
+ */
+
+THREE.EffectComposer = function (renderer, renderTarget) {
+
+	this.renderer = renderer;
+
+	if (renderTarget === undefined) {
+
+		var width = window.innerWidth || 1;
+		var height = window.innerHeight || 1;
+		var parameters = {
+			minFilter: THREE.LinearFilter,
+			magFilter: THREE.LinearFilter,
+			format: THREE.RGBFormat,
+			stencilBuffer: false
+		};
+
+		renderTarget = new THREE.WebGLRenderTarget(width, height, parameters);
+
+	}
+
+	this.renderTarget1 = renderTarget;
+	this.renderTarget2 = renderTarget.clone();
+
+	this.writeBuffer = this.renderTarget1;
+	this.readBuffer = this.renderTarget2;
+
+	this.passes = [];
+
+	if (THREE.CopyShader === undefined)
+		console.error("THREE.EffectComposer relies on THREE.CopyShader");
+
+	this.copyPass = new THREE.ShaderPass(THREE.CopyShader);
+
+};
+
+THREE.EffectComposer.prototype = {
+
+	swapBuffers: function () {
+
+		var tmp = this.readBuffer;
+		this.readBuffer = this.writeBuffer;
+		this.writeBuffer = tmp;
+
+	},
+
+	addPass: function (pass) {
+
+		this.passes.push(pass);
+
+	},
+
+	insertPass: function (pass, index) {
+
+		this.passes.splice(index, 0, pass);
+
+	},
+
+	render: function (delta) {
+
+		this.writeBuffer = this.renderTarget1;
+		this.readBuffer = this.renderTarget2;
+
+		var maskActive = false;
+
+		var pass, i, il = this.passes.length;
+
+		for (i = 0; i &lt; il; i++) {
+
+			pass = this.passes[i];
+
+			if (!pass.enabled) continue;
+
+			pass.render(this.renderer, this.writeBuffer, this.readBuffer, delta, maskActive);
+
+			if (pass.needsSwap) {
+
+				if (maskActive) {
+
+					var context = this.renderer.context;
+
+					context.stencilFunc(context.NOTEQUAL, 1, 0xffffffff);
+
+					this.copyPass.render(this.renderer, this.writeBuffer, this.readBuffer, delta);
+
+					context.stencilFunc(context.EQUAL, 1, 0xffffffff);
+
+				}
+
+				this.swapBuffers();
+
+			}
+
+			if (pass instanceof THREE.MaskPass) {
+
+				maskActive = true;
+
+			} else if (pass instanceof THREE.ClearMaskPass) {
+
+				maskActive = false;
+
+			}
+
+		}
+
+	},
+
+	reset: function (renderTarget) {
+
+		if (renderTarget === undefined) {
+
+			renderTarget = this.renderTarget1.clone();
+
+			renderTarget.width = window.innerWidth;
+			renderTarget.height = window.innerHeight;
+
+		}
+
+		this.renderTarget1 = renderTarget;
+		this.renderTarget2 = renderTarget.clone();
+
+		this.writeBuffer = this.renderTarget1;
+		this.readBuffer = this.renderTarget2;
+
+	},
+
+	setSize: function (width, height) {
+
+		var renderTarget = this.renderTarget1.clone();
+
+		renderTarget.width = width;
+		renderTarget.height = height;
+
+		this.reset(renderTarget);
+
+	}
+
+};
+
+// shared ortho camera
+
+THREE.EffectComposer.camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+
+THREE.EffectComposer.quad = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), null);
+
+THREE.EffectComposer.scene = new THREE.Scene();
+THREE.EffectComposer.scene.add(THREE.EffectComposer.quad);
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="Hotspot.html">Hotspot</a></li><li><a href="Location.html">Location</a></li><li><a href="LocationLoader.html">LocationLoader</a></li><li><a href="THREE.RenderPass.html">RenderPass</a></li><li><a href="THREE.ShaderPass.html">ShaderPass</a></li><li><a href="Transition.html">Transition</a></li></ul><h3>Namespaces</h3><ul><li><a href="THREEx.html">THREEx</a></li></ul><h3>Global</h3><ul><li><a href="global.html#_">_</a></li><li><a href="global.html#animate">animate</a></li><li><a href="global.html#camera">camera</a></li><li><a href="global.html#Detector">Detector</a></li><li><a href="global.html#downEventHandler">downEventHandler</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#initEventListener">initEventListener</a></li><li><a href="global.html#initTooltip">initTooltip</a></li><li><a href="global.html#moveEventHandler">moveEventHandler</a></li><li><a href="global.html#onDocumentTouchEnd">onDocumentTouchEnd</a></li><li><a href="global.html#onDocumentTouchMove">onDocumentTouchMove</a></li><li><a href="global.html#onDocumentTouchStart">onDocumentTouchStart</a></li><li><a href="global.html#onKeyDown">onKeyDown</a></li><li><a href="global.html#onKeyUp">onKeyUp</a></li><li><a href="global.html#onMouseDown">onMouseDown</a></li><li><a href="global.html#onMouseMove">onMouseMove</a></li><li><a href="global.html#onMouseUp">onMouseUp</a></li><li><a href="global.html#onMouseWheel">onMouseWheel</a></li><li><a href="global.html#onWindowResize">onWindowResize</a></li><li><a href="global.html#parseConfigJSON">parseConfigJSON</a></li><li><a href="global.html#resetPanorama">resetPanorama</a></li><li><a href="global.html#setMapandNavigationHidden">setMapandNavigationHidden</a></li><li><a href="global.html#setupBrightBlurShader">setupBrightBlurShader</a></li><li><a href="global.html#setupDarkBlurShader">setupDarkBlurShader</a></li><li><a href="global.html#showAbout">showAbout</a></li><li><a href="global.html#startComplete">startComplete</a></li><li><a href="global.html#startPanorama">startPanorama</a></li><li><a href="global.html#switchScene">switchScene</a></li><li><a href="global.html#THREE">THREE</a></li><li><a href="global.html#transitToLocation">transitToLocation</a></li><li><a href="global.html#update">update</a></li><li><a href="global.html#updateCursor">updateCursor</a></li><li><a href="global.html#updateSceneSwitchButton">updateSceneSwitchButton</a></li><li><a href="global.html#updateTargetList">updateTargetList</a></li><li><a href="global.html#upEventHandler">upEventHandler</a></li><li><a href="global.html#vectorToString">vectorToString</a></li><li><a href="global.html#wheelEventHandler">wheelEventHandler</a></li><li><a href="global.html#zoom">zoom</a></li></ul>
+</nav>
+
+<br clear="both">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Tue Jul 07 2015 00:50:17 GMT+0200 (CEST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

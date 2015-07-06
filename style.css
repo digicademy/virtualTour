@@ -1,0 +1,227 @@
+/* (c)
+Julius Peinelt
+Aline Deicke
+Anna Neovesky - Digitale Akademie, Akademie der Wissenschaften und der Literatur | Mainz - Anna.Neovesky@adwmainz.de
+*/
+
+
+/* reset */
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+
+div#panorama {
+	position: static;
+}
+
+body {
+	background-color: #000000;
+	margin: 0px;
+	overflow: hidden;
+	font-family: "Palatino Linotype", Baskerville, "Times New Roman", Times, serif;
+	font-size: 62.5%;
+	color: #333;
+}
+
+/* basic figure configuration for map, nav, about, fullscreen */
+figure {
+	position: absolute;
+}
+
+p, dl {
+	font-size: 1.6em;
+	line-height: 1.5em;
+}
+
+dt:after {
+	content: ':';
+	padding-right: 2em;
+}
+
+/*
+	NAVIGATION
+	*/
+
+#nav {
+	z-index: 0;
+	display: block;
+	position: absolute;
+	bottom: 10px;
+	right: 10px;
+}
+
+.panoNavButton {
+	width: 36px;
+	height: 36px;
+	z-index: 0;
+	position: absolute;
+}
+
+#upNavButton {
+	bottom: 110px;
+	right: 75px;
+}
+
+#downNavButton {
+	bottom: 28px;
+	right: 75px;
+}
+
+#rightNavButton {
+	bottom: 67px;
+	right: 36px;
+}
+
+#leftNavButton {
+	bottom: 67px;
+	right: 115px;
+}
+
+#zoomInButton {
+	bottom: 67px;
+	right: 190px;
+}
+
+#zoomOutButton {
+	bottom: 67px;
+	right: 240px;
+}
+
+/**
+	FURTHER "ON-SCREEN" BUTTONS
+	**/
+
+#fullscreen {
+	z-index: 0;
+	position: absolute;
+	bottom: 10px;
+	left: 10px;
+}
+
+#about {
+	z-index: -1;
+	position: absolute;
+	bottom: 10px;
+	left: 10px;
+	padding: 1% 1.5%;
+	background-color: rgba(255, 255, 255, 0.8);
+	border-radius: 3px;
+}
+
+#sceneSwitch {
+	z-index: 0;
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	padding: 1% 1.5%;
+	background-color: rgba(255, 255, 255, 0.8);
+	border-radius: 3px;
+}
+
+/*
+	MAP
+	*/
+
+#map {
+	display: none;
+	text-align: left;
+	margin: auto;
+	z-index: 0;
+	position: absolute;
+	float: right;
+}
+
+#mapSpot {
+	background-color: #917d4d;
+	width: 23px;
+	height: 23px;
+	z-index: 0;
+	position: absolute;
+	border-radius: 50%;
+}
+
+#mapSpotCurrent {
+	background-color: #A30000;
+	width: 23px;
+	height: 23px;
+	z-index: 0;
+	position: absolute;
+	border-radius: 50%;
+}
+
+/*
+	INFORMATION POP UP
+	*/
+
+#toolTip {
+	display: none;
+	position: absolute;
+	padding: 1% 1.5%;
+	background-color: rgba(255, 255, 255, 0.8);
+}
+
+#infoView {
+	display: none;
+	position: absolute;
+	width: 27%;
+	margin: 10em 35%;
+	padding: 1% 1.5%;
+	border: 1px solid #917d4d;
+	border-radius: 3px;
+	background-color: rgba(255, 255, 255, 0.8);
+}
+
+#infoCloseButton {
+	right: 4.2%;
+}
+
+h1 {
+	margin-bottom: 0.5em;
+	padding-right: 9%;
+	font-size: 2.6em;
+	line-height: 1em;
+	text-transform: uppercase;
+	color: #917d4d;
+}
+
+h2 {
+	font: 1.8em Geneva, Lucida Grande, Lucida Sans, sans-serif;
+	text-transform: uppercase;
+	padding-top: 1.8em;
+}
+
+dt {
+	font-weight: bold;
+}
+
+#infoImageBox {
+	position: relative;
+	margin-bottom: 1.5em;
+}
+
+#infoImageBox img {
+	width: 98%;
+	padding: 1%;
+	border: 1px solid #c9cbd0;
+	box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
+	background: #fff;
+}
+
+#infoImageBox figcaption {
+	font-size: 1.4em;
+	margin-top: 0.5em;
+}
+
+audio {
+	width: 100%;
+	margin-bottom: 1.5em;
+}
+
+#panorama a {
+	color: #917d4d;
+}

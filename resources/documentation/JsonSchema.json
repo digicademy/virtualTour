@@ -1,0 +1,88 @@
+{
+	"startLocation": 1,
+	"maps": [
+		{
+			"uid": 1,
+			"image": "resources/maps/map1.png",
+			"mapSpots": [
+				{
+					"uid": 0,
+					"tooltip": "Map Spot 1",
+					"mapPosX": 30,
+					"mapPosY": 85
+				}
+			]
+		}
+	],
+	"locations": [
+		{
+			"uid": 1,
+			"image": [
+				"resources/panos/image1"
+			],
+			"mapUid": 1,
+			"transitions": [
+				{
+					"target_location": 2,
+					"tooltip": "Goes to Location 2",
+					"posX": 0,
+					"posY": 0,
+					"posZ": 0
+				}
+			],
+			"cameraTargets": {
+				"2": {
+					"lat": -6,
+					"lon": -110
+				},
+				"-1": {
+					"lat": 2,
+					"lon": -103
+				}
+			},
+			"hotspots": [
+			]
+		},
+		{
+			"uid": 2,
+			"image": [
+				"resources/panos/image2"
+			],
+			"mapUid": 1,
+			"transitions": [
+				{
+					"target_location": 1,
+					"tooltip": "Goes to Location 1",
+					"posX": -34,
+					"posY": -28,
+					"posZ": 190
+				}
+			],
+	 		"cameraTargets": {
+				"1": {
+					"lat": 3,
+					"lon": -114
+				},
+				"-1": {
+			 		"lat": 2,
+					"lon": -103
+				}
+			},
+			"hotspots": [
+				{
+					"uid": 1,
+					"title": "Title",
+					"tooltip": "Information 1",
+					"text": "Some textual information here. Links can be also stated.",
+					"images": [
+						"resources/images/imagesample1.jpg"
+					],
+					"audio": "resources/audio/audiosample.mp3",
+					"posX": 144,
+					"posY": 80,
+			 		"posZ": -104
+					}
+	 		]
+		}
+	]
+}

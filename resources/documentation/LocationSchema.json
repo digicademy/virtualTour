@@ -1,0 +1,36 @@
+{
+	"uid": 1,
+	"image": [
+	"resources/panos/image"
+	],
+	"mapUid": 1,
+	"transitions": [
+		{
+			"target_location": 3,
+			"tooltip": "",
+			"posX": 0,
+			"posY": 0,
+			"posZ": 0
+		}
+	],
+	"cameraTargets": {
+		"-1": {
+		"lat": 0,
+		"lon": 0
+		}
+	},
+	"hotspots": [
+		{
+			"uid": 1,
+			"tooltip": "",
+			"posX": 0,
+			"posY": 0,
+			"posZ": 0,
+			"text": "",
+			"images": [
+				"resources/images/image"
+			],
+			"audio": "resources/audio/track"
+		}
+	]
+}

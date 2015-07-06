@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Index</title>
+    
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+    
+    <h1 class="page-title">Index</h1>
+    
+    
+
+
+    
+
+
+    <h3> </h3>
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+    <section>
+        <article><h1>virtualTour</h1>
+<p>virtualTour is a generic software that allows to create custom virtual tours.</p>
+<h2>License</h2>
+<p>virtualTour is licensed under GNU GPL V3.</p>
+<h2>Dependencies and Requirements</h2>
+<p>virtualTour depends on Three.js in revision 68 and other smaller scripts by <a href="http://mrdoob.com/">Mr. Doob</a>. Further it uses a helper 
+script by <a href="https://github.com/stemkoski">stemkoski</a> to handle full screen support. The used shader are inspired by <a href="http://www.lab4games.net/zz85/blog">zz85</a>. The effect composer
+for applying shader is by <a href="http://alteredqualia.com">alteredq</a>.</p>
+<p>To use virtualTour you need a web browser with WebGL support. For more information have a look at <a href="http://caniuse.com/#feat=webgl">caniuse.com</a>.</p>
+<h2>Embed virtualTour and create a panorama</h2>
+<p>To embed virtualTour in a web page have a look at the index.html of this repository. It is a minimal example web page
+with nothing but virtualTour on it. That means every DOM element listed there is needed. Also every imported JavaScript
+file on top is mandatory. To create a panorama with way points between different views consider the JSON files
+in the documentation folder (JsonSchema.json and LocationSchema.json). There you also find the documentation of the code.</p>
+<h3>Positioning of Hotspots and Transitions</h3>
+<p>For easier positioning of interactive elements you can add following lines to the update() function in panorama.js</p>
+<pre><code>    console.log(&quot;Camera Target: &quot; + vectorToString(camera.target));
+    console.log(&quot;-----------------------------&quot;);</code></pre>
+<p>Just place them after the camera target was updated.</p></article>
+    </section>
+
+
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="Hotspot.html">Hotspot</a></li><li><a href="Location.html">Location</a></li><li><a href="LocationLoader.html">LocationLoader</a></li><li><a href="THREE.RenderPass.html">RenderPass</a></li><li><a href="THREE.ShaderPass.html">ShaderPass</a></li><li><a href="Transition.html">Transition</a></li></ul><h3>Namespaces</h3><ul><li><a href="THREEx.html">THREEx</a></li></ul><h3>Global</h3><ul><li><a href="global.html#_">_</a></li><li><a href="global.html#animate">animate</a></li><li><a href="global.html#camera">camera</a></li><li><a href="global.html#Detector">Detector</a></li><li><a href="global.html#downEventHandler">downEventHandler</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#initEventListener">initEventListener</a></li><li><a href="global.html#initTooltip">initTooltip</a></li><li><a href="global.html#moveEventHandler">moveEventHandler</a></li><li><a href="global.html#onDocumentTouchEnd">onDocumentTouchEnd</a></li><li><a href="global.html#onDocumentTouchMove">onDocumentTouchMove</a></li><li><a href="global.html#onDocumentTouchStart">onDocumentTouchStart</a></li><li><a href="global.html#onKeyDown">onKeyDown</a></li><li><a href="global.html#onKeyUp">onKeyUp</a></li><li><a href="global.html#onMouseDown">onMouseDown</a></li><li><a href="global.html#onMouseMove">onMouseMove</a></li><li><a href="global.html#onMouseUp">onMouseUp</a></li><li><a href="global.html#onMouseWheel">onMouseWheel</a></li><li><a href="global.html#onWindowResize">onWindowResize</a></li><li><a href="global.html#parseConfigJSON">parseConfigJSON</a></li><li><a href="global.html#resetPanorama">resetPanorama</a></li><li><a href="global.html#setMapandNavigationHidden">setMapandNavigationHidden</a></li><li><a href="global.html#setupBrightBlurShader">setupBrightBlurShader</a></li><li><a href="global.html#setupDarkBlurShader">setupDarkBlurShader</a></li><li><a href="global.html#showAbout">showAbout</a></li><li><a href="global.html#startComplete">startComplete</a></li><li><a href="global.html#startPanorama">startPanorama</a></li><li><a href="global.html#switchScene">switchScene</a></li><li><a href="global.html#THREE">THREE</a></li><li><a href="global.html#transitToLocation">transitToLocation</a></li><li><a href="global.html#update">update</a></li><li><a href="global.html#updateCursor">updateCursor</a></li><li><a href="global.html#updateSceneSwitchButton">updateSceneSwitchButton</a></li><li><a href="global.html#updateTargetList">updateTargetList</a></li><li><a href="global.html#upEventHandler">upEventHandler</a></li><li><a href="global.html#vectorToString">vectorToString</a></li><li><a href="global.html#wheelEventHandler">wheelEventHandler</a></li><li><a href="global.html#zoom">zoom</a></li></ul>
+</nav>
+
+<br clear="both">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Tue Jul 07 2015 00:50:18 GMT+0200 (CEST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
