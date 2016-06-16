@@ -25,22 +25,35 @@ var panoramaData;
 var isLoading = false;
 var lastPanoramaUID = -1;
 var mapUid = 0;
+var showHotspotOptions = false;
 
 var toolTip;
 
 var timerId;
+var container;
 var resolution = "default";
 
 /**
  * Starts panorama, creates a loading scene and triggers the loading of the start location. Starts animating.
  * @param dataURL URL to the config JSON
  */
-function startPanorama(dataURL, res) {
+// function startPanorama(dataURL, res) {
+// 	resolution = res;
+// 	setMapandNavigationHidden(true);
+// 	init();
+// 	isLoading = true;
+// 	parseConfigJSON(dataURL, function (data) {
+// 		var loader = new LocationLoader();
+// 		loader.loadLocation(data.startLocation, startComplete);
+// 	});
+// 	animate();
+// }
+function startPanorama(jsonData, res) {
 	resolution = res;
 	setMapandNavigationHidden(true);
 	init();
 	isLoading = true;
-	parseConfigJSON(dataURL, function (data) {
+	parseConfigJSON(jsonData, function (data) {
 		var loader = new LocationLoader();
 		loader.loadLocation(data.startLocation, startComplete);
 	});
@@ -59,24 +72,43 @@ function initTooltip() {
  * @param dataURL URL to config JSON.
  * @param callback function that gets called after parsing is finished.
  */
-function parseConfigJSON(dataURL, callback) {
-	var request = new XMLHttpRequest();
-	request.open("GET", dataURL, true);
-	request.onreadystatechange = function () {
-		if (request.readyState === 4 && request.status === 200) {
-			panoramaData = JSON.parse(request.responseText);
+function parseConfigJSON(jsonData, callback) {
+	// var request = new XMLHttpRequest();
+	// request.open("GET", dataURL, true);
+	// request.onreadystatechange = function () {
+		// if (request.readyState === 4 && request.status === 200) {
+		// console.log(jsonData);
+			// panoramaData = JSON.parse(jsonData);
+			panoramaData = jsonData;
 			callback(panoramaData);
-		}
-	};
-	request.send(null);
+	// 	}
+	// };
+	// request.send(null);
 }
+// function parseConfigJSON(dataURL, callback) {
+// 	var request = new XMLHttpRequest();
+// 	request.open("GET", dataURL, true);
+// 	request.onreadystatechange = function () {
+// 		if (request.readyState === 4 && request.status === 200) {
+// 			panoramaData = JSON.parse(request.responseText);
+// 			callback(panoramaData);
+// 		}
+// 	};
+// 	request.send(null);
+// }
+
 
 
 /**
  * Initializes renderer, camera, projector, tooltip
  */
 function init() {
-	camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 200);
+	container = _('panorama');
+	divWidth = container.offsetWidth
+	divHeight = window.innerHeight-(window.innerHeight*20/100);
+	// console.log(window.innerWidth);
+	// console.log(divHeight);
+	camera = new THREE.PerspectiveCamera(60, divWidth / divHeight, 1, 200);
 	camera.target = new THREE.Vector3(0, 0, 1);
 	// initialize object to perform world/screen calculations
 	projector = new THREE.Projector();
@@ -85,8 +117,8 @@ function init() {
 	} else {
 		renderer = new THREE.CanvasRenderer();
 	}
-	renderer.setSize(window.innerWidth, window.innerHeight);
-	var container = _('panorama');
+	renderer.setSize(divWidth, divHeight);
+	// var container = _('panorama');
 	container.appendChild(renderer.domElement);
 	initTooltip()
 }
@@ -180,7 +212,7 @@ function transitToLocation(locationIndex, reset) {
  */
 function initEventListener() {
 	var container = _('panorama');
-	THREEx.FullScreen.bindKey({charCode: 'f'.charCodeAt(0), element: _('panorama')});
+	// THREEx.FullScreen.bindKey({charCode: 'f'.charCodeAt(0), element: _('panorama')});
 
 	container.addEventListener('mousedown', onMouseDown, false);
 	container.addEventListener('mousemove', onMouseMove, false);
@@ -368,9 +400,10 @@ function setMapandNavigationHidden(hidden) {
  * @param event not used.
  */
 function onWindowResize(event) {
-	camera.aspect = window.innerWidth / window.innerHeight;
+	divHeight = window.innerHeight-(window.innerHeight*20/100);
+	camera.aspect = divWidth / divHeight;
 	camera.updateProjectionMatrix();
-	renderer.setSize(window.innerWidth, window.innerHeight);
+	renderer.setSize(divWidth, divHeight);
 }
 
 /**
@@ -380,7 +413,7 @@ function onWindowResize(event) {
 function onMouseDown(event) {
 	var eventX = event.pageX;
 	var eventY = event.pageY;
-	downEventHandler(eventX, eventY, event);
+	// downEventHandler(eventX, eventY, event);
 }
 
 /**
@@ -511,18 +544,22 @@ function moveEventHandler(eventX, eventY, event) {
  * @param eventY y-Value of event
  * @param event input event
  */
+ var mouseX,mouseY,showHotspotOptions;
 function downEventHandler(eventX, eventY, event) {
 	if (isPopupOpen) {
 		return;
 	}
-	event.preventDefault();
 
+	event.preventDefault();
+	
 	// update the mouse variable
 	// canvas position has to be 'static'
-	//mouse.x = ( ( eventX - renderer.domElement.offsetLeft ) / renderer.domElement.width ) * 2 - 1;
-	//mouse.y = - ( ( eventY - renderer.domElement.offsetTop ) / renderer.domElement.height ) * 2 + 1;
-	mouse.x = ( eventX / window.innerWidth ) * 2 - 1;
-	mouse.y = -( eventY / window.innerHeight ) * 2 + 1;
+	mouse.x = (mouseX/ renderer.domElement.width ) * 2 - 1;
+	mouse.y = - ( mouseY / renderer.domElement.height ) * 2 + 1;
+	// mouse.x = ( ( eventX - renderer.domElement.offsetLeft ) / renderer.domElement.width ) * 2 - 1;
+	// mouse.y = - ( ( eventY - renderer.domElement.offsetTop ) / renderer.domElement.height ) * 2 + 1;
+	// mouse.x = ( eventX / window.innerWidth ) * 2 - 1;
+	// mouse.y = -( eventY / window.innerHeight ) * 2 + 1;
 
 	// find intersections
 	// create a Ray with origin at the mouse position
@@ -532,14 +569,17 @@ function downEventHandler(eventX, eventY, event) {
 	var ray = new THREE.Raycaster(camera.position, vector.sub(camera.position).normalize());
 
 	// create an array containing all objects in the scene with which the ray intersects
-	var intersects = ray.intersectObjects(targetList);
+	var intersects = ray.intersectObjects(scene.children);
+	console.log(intersects[0].point);
 
 	// if there is one (or more) intersections
 	if (intersects.length > 0) {
-		intersects[0].object.onClick();
+		// // intersects[0].object.onClick();
 		if (intersects[0].object instanceof Hotspot) {
 			isPopupOpen = true;
-		}
+			}else{
+				return intersects[0].point;
+			}
 	} else {
 		lonFactor = mouse.x;
 		latFactor = mouse.y;

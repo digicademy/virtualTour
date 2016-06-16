@@ -35,7 +35,7 @@ LocationLoader.prototype.loadLocation = function (uid, onLoadComplete) {
 			imgUrl = item.image.hq;
 		}
 
-
+		THREE.ImageUtils.crossOrigin = '';
 		THREE.ImageUtils.loadTexture(imgUrl,
 			{},
 			function (texture) {
