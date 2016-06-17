@@ -237,6 +237,7 @@ function initEventListener() {
 	}, false);
 	container.addEventListener('drop', function (event) {
 		event.preventDefault();
+		return false;
 		var reader = new FileReader();
 		reader.addEventListener('load', function (event) {
 			material.map.image.src = event.target.result;
@@ -423,7 +424,7 @@ function onMouseDown(event) {
 function onMouseMove(event) {
 	var eventX = event.pageX;
 	var eventY = event.pageY;
-	moveEventHandler(eventX, eventY, event);
+	// moveEventHandler(eventX, eventY, event);
 }
 
 /**
@@ -490,9 +491,10 @@ function moveEventHandler(eventX, eventY, event) {
 	if (isPopupOpen) {
 		return;
 	}
-
-	mouse.x = ( eventX / window.innerWidth ) * 2 - 1;
-	mouse.y = -( eventY / window.innerHeight ) * 2 + 1;
+	// mouse.x = ( eventX / window.innerWidth ) * 2 - 1;
+	// mouse.y = -( eventY / window.innerHeight ) * 2 + 1;
+	mouse.x = (eventX/ renderer.domElement.width ) * 2 - 1;
+	mouse.y = - ( eventY / renderer.domElement.height ) * 2 + 1;
 
 	if (isUserInteracting === true) {
 		lonFactor = mouse.x;
@@ -505,7 +507,7 @@ function moveEventHandler(eventX, eventY, event) {
 
 		// create an array containing all objects in the scene with which the ray intersects
 		var intersects = ray.intersectObjects(targetList);
-
+		console.log(intersects);
 		// if there is one (or more) intersections
 		if (intersects.length > 0) {
 			if (intersects[0].object != hoverIntersected) {
@@ -569,13 +571,17 @@ function downEventHandler(eventX, eventY, event) {
 	var ray = new THREE.Raycaster(camera.position, vector.sub(camera.position).normalize());
 
 	// create an array containing all objects in the scene with which the ray intersects
-	var intersects = ray.intersectObjects(scene.children);
-	console.log(intersects[0].point);
+	if(showHotspotOptions){
+		var intersects = ray.intersectObjects(scene.children);	
+	}else{
+		var intersects = ray.intersectObjects(targetList);	
+	}
 
 	// if there is one (or more) intersections
 	if (intersects.length > 0) {
-		// // intersects[0].object.onClick();
+		
 		if (intersects[0].object instanceof Hotspot) {
+			intersects[0].object.onClick();
 			isPopupOpen = true;
 			}else{
 				return intersects[0].point;
