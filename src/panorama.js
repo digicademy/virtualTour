@@ -507,7 +507,7 @@ function moveEventHandler(eventX, eventY, event) {
 
 		// create an array containing all objects in the scene with which the ray intersects
 		var intersects = ray.intersectObjects(targetList);
-		console.log(intersects);
+		// console.log(intersects);
 		// if there is one (or more) intersections
 		if (intersects.length > 0) {
 			if (intersects[0].object != hoverIntersected) {
