@@ -485,17 +485,16 @@ function onDocumentTouchEnd(event) {
 
 function moveEventHandler(eventX, eventY, event) {
 	// Position of toolTips
-	toolTip.style.left = eventX + 20 + "px";
-	toolTip.style.top = eventY + 20 + "px";
+	toolTip.style.left = mouseX + 20 + "px";
+	toolTip.style.top = mouseY + 20 + "px";
 
 	if (isPopupOpen) {
 		return;
 	}
 	// mouse.x = ( eventX / window.innerWidth ) * 2 - 1;
 	// mouse.y = -( eventY / window.innerHeight ) * 2 + 1;
-	mouse.x = (eventX/ renderer.domElement.width ) * 2 - 1;
-	mouse.y = - ( eventY / renderer.domElement.height ) * 2 + 1;
-
+	mouse.x = (mouseX/ renderer.domElement.width ) * 2 - 1;
+	mouse.y = - ( mouseY / renderer.domElement.height ) * 2 + 1;
 	if (isUserInteracting === true) {
 		lonFactor = mouse.x;
 		latFactor = mouse.y;
@@ -507,7 +506,7 @@ function moveEventHandler(eventX, eventY, event) {
 
 		// create an array containing all objects in the scene with which the ray intersects
 		var intersects = ray.intersectObjects(targetList);
-		// console.log(intersects);
+		// console.log(targetList);
 		// if there is one (or more) intersections
 		if (intersects.length > 0) {
 			if (intersects[0].object != hoverIntersected) {
@@ -818,7 +817,3 @@ function _(id) {
 function vectorToString(v) {
 	return "[ " + v.x + ", " + v.y + ", " + v.z + " ]";
 }
-
-
-
-
