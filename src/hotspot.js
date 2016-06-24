@@ -15,6 +15,7 @@ Hotspot = function (parameters) {
 	this.infoContent = parameters.hasOwnProperty('content') ? parameters['content'] : "No content";
 	this.infoTitle = parameters.hasOwnProperty('title') ? parameters['title'] : "";
 	this.infoImages = parameters.hasOwnProperty('images') ? parameters['images'] : null;
+	this.uid = parameters['uid'];
 
 
 	this.tooltip = parameters.hasOwnProperty('tooltip') ? parameters['tooltip'] : null;
@@ -23,7 +24,7 @@ Hotspot = function (parameters) {
 	// setting size and material of hotspot icon in panorama
 	var geometry = new THREE.PlaneGeometry(16, 16);
 	var material = new THREE.MeshBasicMaterial({
-		map: THREE.ImageUtils.loadTexture("resources/icons/information.png"),
+		map: THREE.ImageUtils.loadTexture("http://localhost/code/makura/virtual-tour/app/bower_components/virtualTour/resources/icons/information.png"),
 		transparent: true
 
 	});
