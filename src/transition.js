@@ -17,7 +17,7 @@ Transition = function (parameters) {
 
 	var geometry = new THREE.PlaneGeometry(15, 15);
 	var material = new THREE.MeshBasicMaterial({
-		map: THREE.ImageUtils.loadTexture("resources/icons/transfer.png"),
+		map: THREE.ImageUtils.loadTexture("http://vtour.local.com/app/bower_components/virtualTour/resources/icons/transfer.png"),
 		transparent: true
 	});
 	THREE.Mesh.call(this, geometry, material);
