@@ -10,7 +10,7 @@ Own  content  (panoramic  images,  text,  audio,  links)  can  be  added  to  th
 
 For an example see the [Virtual Tour to the Inscriptions of the UNESCO World Heritage Site St. Michael in Hildesheim](http://www.inschriften.net/hildesheim/rundgang.html)
 
-![Virtual Tour to the Inscriptions of the UNESCO World Heritage Site St. Michael in Hildesheim][screenshot]
+![Virtual Tour to the Inscriptions of the UNESCO World Heritage Site St. Michael in Hildesheim][screenshot]. 
 panoramic images: [i3mainz](https://i3mainz.hs-mainz.de/), University of Applied Sciences Mainz
 
 For structure, possibilities ans usage of teh software see:
