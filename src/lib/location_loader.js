@@ -35,7 +35,7 @@ LocationLoader.prototype.loadLocation = function (uid, onLoadComplete) {
 			imgUrl = item.image.hq;
 		}
 
-
+		THREE.ImageUtils.crossOrigin = '';
 		THREE.ImageUtils.loadTexture(imgUrl,
 			{},
 			function (texture) {
@@ -54,7 +54,9 @@ LocationLoader.prototype.loadLocation = function (uid, onLoadComplete) {
 						title: hData.title,
 						images: hData.images,
 						audio: hData.audio,
-						tooltip: hData.tooltip
+						tooltip: hData.tooltip,
+						type:hData.type,
+						uid:hData.uid
 					};
 					location.addHotspot(hParam);
 				});

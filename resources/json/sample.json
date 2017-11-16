@@ -1,5 +1,5 @@
 {
-	"startLocation": 2,
+	"startLocation": 1,
 	"maps": [
 		{
 			"uid": 1,
@@ -58,6 +58,16 @@
 				"posX": -61,
 				"posY": 114,
 				"posZ": 145
+			},
+			{
+				"uid": 1,
+				"title": "Title",
+				"tooltip": "Information",
+			 	"text": "Example with audio.",
+				"audio": "resources/audio/audiosample",
+				"posX": 15.990196593435574,
+				"posY": -102.75193814694006,
+				"posZ": -170.41940189961457
 			}
 		  ]
 		},
